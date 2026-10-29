@@ -1,0 +1,11 @@
+# 收录条目 —— 提交到 awesome-dsh-plugin 仓库时，放到：
+#   data/plugins/hisence999__dsh-computer-use.yml
+# 注意：英文描述含 ": "（冒号+空格），按规则必须加引号。
+# 描述按纯桌面操控写，要等新版本发布、assets/market 推到 main 后再提交。
+url: https://github.com/hisence999/dsh-computer-use
+name: hisence999/dsh-computer-use
+category: tools
+description:
+  en: 'Lets the DSH agent operate your Windows apps: it reads controls through UI Automation, clicks, types, captures the screen and reads text with OCR; when it needs your mouse or keyboard, an on-screen indicator appears and Esc stops it.'
+  zh: 让 DSH 的 agent 直接操作你的 Windows 桌面程序：用 UI Automation 读控件，点击、输入、截图、识别文字；需要用鼠标键盘时屏幕会提示，按 Esc 立刻停下。
+icon: https://raw.githubusercontent.com/hisence999/dsh-computer-use/main/assets/market/icon-180.png
