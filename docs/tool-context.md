@@ -8,7 +8,11 @@ Choose Lite / All / Lazy / Custom in the outer preset selector; All is the defau
 
 选择 `toolPreset: "lazy"` 时，用户允许全部 24 项，但启动只注册管理入口。先用 `enable` 加载任务所需工具；已有 `names: ["screenshot","click"]` 支持一次加载多项。新增 `names: ["*"]` 可一次启用全部已允许的桌面工具，或配合 `disable` 卸载它们，始终保留管理入口。通配符必须单独使用，不能用于 `list`、`describe` 或 `reset`。精简和自定义方案的限制同样适用于通配符。`reset` 在懒启动中回到 1 项；重新连接也回到保存的启动方案。
 
+在 DSH 里，`enable` / `disable` / `reset` 按会话记账：某个会话加载的工具只对该会话可见，新会话仍从启动集合开始，互不继承。宿主没有给出会话信息时（脚本、子代理等直接派发），注册只能落到全局层，此时返回的 `nextStep` 会说明这一点，不会假装成会话级。另有一项 `catalog` 供适配器使用：一次取回全部已允许工具的说明与 schema，但不加载任何工具。
+
 `toolPreset: "lazy"` permits all 25 tools but starts with management only. Enable the tools needed for a task using a name array, or use `names: ["*"]` with enable/disable for all allowed desktop tools. Management stays loaded. The wildcard must stand alone and is rejected for list/describe/reset. Lite and Custom restrictions still apply. Reset and reconnect return Lazy to its single management entry.
+
+Inside DSH, enable/disable/reset are per conversation: a tool one conversation loads is visible only there, a new conversation starts again from the startup set, and nothing is inherited. When the host supplies no conversation (a script or a dispatched sub-agent), the registration can only land in the context-global layer; the returned `nextStep` says so instead of pretending it was session-scoped. A separate `catalog` operation serves the adapter: it returns every allowed descriptor with its schema without loading anything.
 
 收益来自尚未加载的工具定义；加载后的定义仍占上下文，已有对话记录不会删除。桌面任务需要额外的加载调用。0.5.0 同口径列表为：全部 20,243、精简 9,030、懒启动 510 字符（较全部减少 97.5%），并非 token 数。
 

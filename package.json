@@ -1,6 +1,6 @@
 {
   "name": "dsh-computer-use",
-  "version": "0.5.3",
+  "version": "0.6.0",
   "description": "DSH computer use for DeepSeek Harness: an MCP stdio server + PowerShell UIA backend, bridged into DSH via @deepseek-ai/dsh-mcp-client. Read/act on real Windows desktop apps (UI Automation tree, screenshots, typed input, OCR, window management).",
   "type": "module",
   "bin": {
@@ -15,6 +15,8 @@
     "mcp/takeover.mjs",
     "mcp/activity.mjs",
     "mcp/calls.mjs",
+    "mcp/mcp-stdio.mjs",
+    "mcp/session-tools.mjs",
     "scripts/windows-uia.ps1",
     "scripts/windows-takeover.ps1",
     "scripts/windows-takeover.cs",

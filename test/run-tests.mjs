@@ -15,6 +15,7 @@ const suites = [
   ['source-encoding', process.execPath, ['test/source-encoding.mjs']],
   ['tool-context', process.execPath, ['test/tool-context.mjs']],
   ['lazy-tools', process.execPath, ['test/lazy-tools.mjs']],
+  ['session-scope', process.execPath, ['test/session-scope.mjs']],
   ['client-settings-contract', process.execPath, ['test/client-settings-contract.mjs']],
   ['schema-compatibility',process.execPath,['test/schema-compatibility.mjs']],
   ['takeover-native', process.execPath, ['test/takeover-native.mjs']],

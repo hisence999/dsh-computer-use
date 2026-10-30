@@ -583,9 +583,9 @@ const discoveryTool = {
   // Desktop tools carry their own capability names. A management-only startup
   // advertises this entry alone, so the name "tools" no longer tells the model
   // that the machine can be read and operated — state the capability first.
-  description: (toolMode === 'lazy' ? 'Lazy startup: ' : '') + (managementOnly ? 'reads and operates real Windows apps (UI Automation, screenshots, OCR, input, windows); enable tools before desktop use. ' : '') + 'List capabilities; describe reads one full schema; enable/disable accepts names or ["*"] for all allowed desktop tools; reset restores startup selection.',
+  description: (toolMode === 'lazy' ? 'Lazy startup: ' : '') + (managementOnly ? 'reads and operates real Windows apps (UI Automation, screenshots, OCR, input, windows); enable tools before desktop use. ' : '') + 'List capabilities; describe reads one full schema; catalog returns every allowed descriptor without enabling it; enable/disable accepts names or ["*"] for all allowed desktop tools; reset restores startup selection.',
   inputSchema: { type: 'object', additionalProperties: false, properties: {
-    operation: { type: 'string', enum: ['list','describe','enable','disable','reset'], default: 'list' },
+    operation: { type: 'string', enum: ['list','describe','catalog','enable','disable','reset'], default: 'list' },
     names: { type: 'array', maxItems: TOOL_NAMES.length, items: { type: 'string' } }
   } }
 };
@@ -613,6 +613,14 @@ function manageTools(args) {
     result = { mode: selectionMode, ...(adapterNotices ? { notices: adapterNotices } : {}), tools: tools.map(tool => ({
       name: tool.name.slice(prefix.length), description: conciseDescriptions[tool.name.slice(prefix.length)], enabled: enabledTools.has(tool.name), available: allowedTools.has(tool.name)
     })) };
+  } else if (args.operation === 'catalog') {
+    // Descriptors for every allowed tool, advertised or not: an embedding host
+    // that scopes activation per conversation needs the full schema set to
+    // register a tool only when its conversation asks for it.
+    if (requested.length) throw new Error('INVALID_ARGUMENTS: catalog takes no names');
+    result = { mode: selectionMode, tools: [...tools.filter(tool => allowedTools.has(tool.name)).map(tool => ({
+      name: tool.name.slice(prefix.length), description: conciseDescriptions[tool.name.slice(prefix.length)], inputSchema: compactSchema(tool.inputSchema)
+    })), { name: 'tools', description: discoveryTool.description, inputSchema: discoveryTool.inputSchema }] };
   } else if (args.operation === 'describe') {
     if (definitions.length !== 1) throw new Error('INVALID_ARGUMENTS: describe requires exactly one name');
     result = definitions[0];
